@@ -56,26 +56,33 @@ function generateRandomImg(){
   randomImg2.timesShown+=1;
   randomImg3.timesShown+=1;
 }
-
 function handleVote(event){
   let imgClicked = event.target.name;
   maxVote-=1;
-  if (allProducts.includes(imgClicked)){
-    // for(let i=0; i<allProducts.length; i++){
-    //   allProducts[i].name
-    // }
-    imgClicked.timesClicked+= 1;
+  for(let i=0; i<allProducts.length; i++){
+    if (imgClicked === allProducts[i].name){
+      allProducts[i].timesVoted+= 1;
+    }
   }
-  if(timesClicked === maxVote){
+  if(maxVote<1){
     imgContainer.removeEventListener('click', handleVote);
     imgContainer.hidden = true;
-    resultsButton.hidden = false;
   }
-  
   generateRandomImg();
 }
-// handleVote();
+function handleResultButton(){
+  resultsButton.hidden = true;
+  let results = document.getElementById('results');
+  let resultsList = document.createElement('ul');
+  results.appendChild(resultsList);
+  for(let i=0; i<allProducts.length; i++){
+    let listItem = document.createElement('li');
+    resultsList.appendChild(listItem);
+    listItem.textContent = `${allProducts[i].name} had ${allProducts[i].timesVoted} votes, and was seen ${allProducts[i].timesShown} times`;
+  }
+}
 createProductObjects();
 generateRandomImg();
 imgContainer.addEventListener('click', handleVote);
+resultsButton.addEventListener('click', handleResultButton);
 
