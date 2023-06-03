@@ -18,8 +18,6 @@ function Product(name, fileExt = 'jpg'){
   this.timesVoted = 0;
   allProducts.push(this);
 }
-
-// Helper functions that perform actions necessary to  create products, generate a random image using a random index of the products array, and renders that image
 // Loops through product array to create an object for each value
 function createProductObjects(){
   for(let i=0; i<products.length; i++){
@@ -29,11 +27,11 @@ function createProductObjects(){
     }
   }
 }
-// Helper function generates a random number to represent the array index with the length of all products as the maxiumum 
+// Helper function generates a random number to represent the array index with the length of all products as the maximum
 function getRandomIndex(){
   return Math.floor(Math.random()* allProducts.length);
 }
-// Generate 3 random product images
+// Generate 3 random product images, assigns values to their attributes, and increments the number of times each is shown
 function generateRandomImg(){
   let randomImg1 = allProducts.at(getRandomIndex());
   let randomImg2 = allProducts.at(getRandomIndex());
@@ -56,6 +54,7 @@ function generateRandomImg(){
   randomImg2.timesShown+=1;
   randomImg3.timesShown+=1;
 }
+// Event handler for when a product is clicked
 function handleVote(event){
   let imgClicked = event.target.name;
   maxVote-=1;
@@ -70,17 +69,49 @@ function handleVote(event){
   }
   generateRandomImg();
 }
+// Event handler for when the user chooses to view results
 function handleResultButton(){
-  resultsButton.hidden = true;
-  let results = document.getElementById('results');
-  let resultsList = document.createElement('ul');
-  results.appendChild(resultsList);
-  for(let i=0; i<allProducts.length; i++){
-    let listItem = document.createElement('li');
-    resultsList.appendChild(listItem);
-    listItem.textContent = `${allProducts[i].name} had ${allProducts[i].timesVoted} votes, and was seen ${allProducts[i].timesShown} times`;
+  // resultsButton.hidden = true;
+  // let results = document.getElementById('results');
+  // let resultsList = document.createElement('ul');
+  // results.appendChild(resultsList);
+  // for(let i=0; i<allProducts.length; i++){
+  //   let listItem = document.createElement('li');
+  //   resultsList.appendChild(listItem);
+  //   listItem.textContent = `${allProducts[i].name} had ${allProducts[i].timesVoted} votes, and was seen ${allProducts[i].timesShown} times`;
+  // }
+  
+  const ctx = document.getElementById('results');
+  const chartConfig = {
+    type: 'bar',
+    data: {
+      labels: ['Lemonade', 'Tea', 'Coke'],
+      datasets: [{
+        label: 'Level of Tastiness',
+        data: [100, 70, 20,],
+        borderWidth: 5,
+        backgroundColor:['yellow', 'brown', 'black'],
+        borderColor: 'blue',
+      },
+      {
+        label: 'Sugar level',
+        data: [50, 20, 80,],
+        borderWidth: 5,
+        backgroundColor:['white'],
+        borderColor: 'black',
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero:true
+        }
+      }
+    }
   }
+  new Chart(ctx, chartConfig);
 }
+
 createProductObjects();
 generateRandomImg();
 imgContainer.addEventListener('click', handleVote);
