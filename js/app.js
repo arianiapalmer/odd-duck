@@ -43,10 +43,13 @@ function generateRandomImg(){
     randomImg3 = allProducts.at(getRandomIndex());
   }
   img1.src = randomImg1.image;
+  img1.name = randomImg1.name;
   img1.alt = `product image of ${randomImg1.name}`;
   img2.src = randomImg2.image;
+  img2.name = randomImg2.name;
   img2.alt = `product image of ${randomImg2.name}`;
   img3.src = randomImg3.image;
+  img3.name = randomImg3.name;
   img3.alt = `product image of ${randomImg3.name}`;
 
   randomImg1.timesShown+=1;
@@ -55,25 +58,24 @@ function generateRandomImg(){
 }
 
 function handleVote(event){
-  let imgClicked = event.target;
-  console.log(imgClicked);
-  // maxVote-=1;
-  // if (allProducts.includes(imgClicked)){
-  //   for(let i=0; i<allProducts.length; i++){
-  //     allProducts[i].name
-  //   }
-  //   allProducts.timesClicked+= 1;
-  // }
-  // if(userClicks === maxRounds){
-  //   imgContainer.removeEventListener('click', handleVote);
-  //   imgContainer.hidden = true;
-  //   resultsButton.hidden = false;
-  // }
+  let imgClicked = event.target.name;
+  maxVote-=1;
+  if (allProducts.includes(imgClicked)){
+    // for(let i=0; i<allProducts.length; i++){
+    //   allProducts[i].name
+    // }
+    imgClicked.timesClicked+= 1;
+  }
+  if(timesClicked === maxVote){
+    imgContainer.removeEventListener('click', handleVote);
+    imgContainer.hidden = true;
+    resultsButton.hidden = false;
+  }
   
   generateRandomImg();
 }
 // handleVote();
 createProductObjects();
 generateRandomImg();
-imgContainer.addEventListener('click', handleVote());
+imgContainer.addEventListener('click', handleVote);
 
