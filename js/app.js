@@ -38,12 +38,13 @@ function createProductObjects(){
     }
   }
 }
+
 function getRandomIndex(){
-  return Math.floor(Math.random(products.length));
+  return Math.floor(Math.random()*(products.length - 0) +0);
 }
 function renderImg(){
 
 }
 // Creates new products
 createProductObjects();
-console.log(getRandomIndex());
+getRandomIndex();
