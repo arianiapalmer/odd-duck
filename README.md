@@ -12,6 +12,7 @@ This app allows the user to vote on the product of their chosing, counting the n
 ### Links and Resources
 
 * [Built using Chart.js](https://www.chartjs.org/docs/latest/)
+* [Styled in tandem with Myer Web's reset stylesheet](http://meyerweb.com/eric/tools/css/reset/)
 
 ### Lighthouse Accessibility Report Score
 
