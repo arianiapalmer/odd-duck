@@ -1,8 +1,9 @@
 'use strict';
 
 let allProducts = [];
-const maxVote = 25;
+let maxVote = 25;
 let imgContainer = document.getElementById('imgContainer');
+let resultsButton = document.querySelector('button');
 let img1 = document.getElementById('img1');
 let img2 = document.getElementById('img2');
 let img3 = document.getElementById('img3');
@@ -17,9 +18,7 @@ function Product(name, fileExt = 'jpg'){
   this.timesVoted = 0;
   allProducts.push(this);
 }
-// Product.prototype.listenClick(){
-//   this.addEventListener('click', handleClick())
-// }
+
 // Helper functions that perform actions necessary to  create products, generate a random image using a random index of the products array, and renders that image
 // Loops through product array to create an object for each value
 function createProductObjects(){
@@ -34,7 +33,7 @@ function createProductObjects(){
 function getRandomIndex(){
   return Math.floor(Math.random()* allProducts.length);
 }
-// TODO: Generate 3 random product images
+// Generate 3 random product images
 function generateRandomImg(){
   let randomImg1 = allProducts.at(getRandomIndex());
   let randomImg2 = allProducts.at(getRandomIndex());
@@ -49,10 +48,32 @@ function generateRandomImg(){
   img2.alt = `product image of ${randomImg2.name}`;
   img3.src = randomImg3.image;
   img3.alt = `product image of ${randomImg3.name}`;
+
+  randomImg1.timesShown+=1;
+  randomImg2.timesShown+=1;
+  randomImg3.timesShown+=1;
 }
-function handleClick(){
-  this.timesShown+=1;
+
+function handleVote(event){
+  let imgClicked = event.target;
+  console.log(imgClicked);
+  // maxVote-=1;
+  // if (allProducts.includes(imgClicked)){
+  //   for(let i=0; i<allProducts.length; i++){
+  //     allProducts[i].name
+  //   }
+  //   allProducts.timesClicked+= 1;
+  // }
+  // if(userClicks === maxRounds){
+  //   imgContainer.removeEventListener('click', handleVote);
+  //   imgContainer.hidden = true;
+  //   resultsButton.hidden = false;
+  // }
+  
   generateRandomImg();
 }
+// handleVote();
 createProductObjects();
 generateRandomImg();
+imgContainer.addEventListener('click', handleVote());
+
