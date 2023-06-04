@@ -4,6 +4,7 @@ let allProducts = [];
 let maxVote = 25;
 let imgContainer = document.getElementById('imgContainer');
 let resultsButton = document.querySelector('button');
+const ctx = document.getElementById('results');
 let img1 = document.getElementById('img1');
 let img2 = document.getElementById('img2');
 let img3 = document.getElementById('img3');
@@ -71,37 +72,38 @@ function handleVote(event){
 }
 // Event handler for when the user chooses to view results
 function handleResultButton(){
-  // resultsButton.hidden = true;
-  // let results = document.getElementById('results');
-  // let resultsList = document.createElement('ul');
-  // results.appendChild(resultsList);
-  // for(let i=0; i<allProducts.length; i++){
-  //   let listItem = document.createElement('li');
-  //   resultsList.appendChild(listItem);
-  //   listItem.textContent = `${allProducts[i].name} had ${allProducts[i].timesVoted} votes, and was seen ${allProducts[i].timesShown} times`;
-  // }
-  
-  const ctx = document.getElementById('results');
+  resultsButton.hidden = true;
+  let productVotes = [];
+  let productViews = [];
+  for(let i=0; i<allProducts.length; i++){
+    productVotes.push(allProducts[i].timesVoted);
+    productViews.push(allProducts[i].timesShown);
+  }
   const chartConfig = {
     type: 'bar',
-    data: {
-      labels: ['Lemonade', 'Tea', 'Coke'],
+    data:{
+      color:'white',
+      labels:products,
       datasets: [{
-        label: 'Level of Tastiness',
-        data: [100, 70, 20,],
-        borderWidth: 5,
-        backgroundColor:['yellow', 'brown', 'black'],
-        borderColor: 'blue',
+        label: '# of Votes',
+        data:productVotes,
+        backgroundColor: 'red',
+        borderWidth: 1,
       },
       {
-        label: 'Sugar level',
-        data: [50, 20, 80,],
-        borderWidth: 5,
-        backgroundColor:['white'],
-        borderColor: 'black',
-      }]
+        label: ' # of views',
+        data:productViews,
+        backgroundColor:'blue',
+        borderWidth: 1
+      }
+      ]
     },
     options: {
+      plugins: {
+        customCanvasBackgroundColor:{
+          color: 'white'
+        }
+      },
       scales: {
         y: {
           beginAtZero:true
