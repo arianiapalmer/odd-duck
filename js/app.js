@@ -19,7 +19,7 @@ function Product(name, fileExt = 'jpg'){
   this.timesVoted = 0;
   allProducts.push(this);
 }
-// Loops through product array to create an object for each value
+// Loops through product array to create an object for each index
 function createProductObjects(){
   for(let i=0; i<products.length; i++){
     new Product(products[i]);
