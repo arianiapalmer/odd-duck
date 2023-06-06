@@ -4,7 +4,7 @@ let allProducts = [];
 let maxVote = 25;
 let imgContainer = document.getElementById('imgContainer');
 let resultsButton = document.querySelector('button');
-const ctx = document.getElementById('results');
+const ctx = document.getElementById('myChart');
 let img1 = document.getElementById('img1');
 let img2 = document.getElementById('img2');
 let img3 = document.getElementById('img3');
@@ -33,14 +33,18 @@ function getRandomIndex(){
   return Math.floor(Math.random()* allProducts.length);
 }
 // Generate 3 random product images, assigns values to their attributes, and increments the number of times each is shown
+let indexArray = [];
+
 function generateRandomImg(){
-  let randomImg1 = allProducts.at(getRandomIndex());
-  let randomImg2 = allProducts.at(getRandomIndex());
-  let randomImg3 = allProducts.at(getRandomIndex());
-  while(randomImg1 === randomImg2 | randomImg2 === randomImg3 | randomImg3 === randomImg1){
-    randomImg1 = allProducts.at(getRandomIndex());
-    randomImg3 = allProducts.at(getRandomIndex());
+  while(indexArray.length < 6){
+    let randomNum = getRandomIndex();
+    if(!indexArray.includes(randomNum)){
+      indexArray.push(randomNum);
+    }
   }
+  let randomImg1 = allProducts.at(indexArray.shift());
+  let randomImg2 = allProducts.at(indexArray.shift());
+  let randomImg3 = allProducts.at(indexArray.shift());
   img1.src = randomImg1.image;
   img1.name = randomImg1.name;
   img1.alt = `product image of ${randomImg1.name}`;
@@ -70,9 +74,8 @@ function handleVote(event){
   }
   generateRandomImg();
 }
-// Event handler for when the user chooses to view results
+// Event handler for when the user clicks, view results - renders a chart
 function handleResultButton(){
-  resultsButton.hidden = true;
   let productVotes = [];
   let productViews = [];
   for(let i=0; i<allProducts.length; i++){
@@ -111,7 +114,12 @@ function handleResultButton(){
       }
     }
   }
-  new Chart(ctx, chartConfig);
+  if(maxVote<1){
+    resultsButton.hidden = true;
+    new Chart(ctx, chartConfig);
+  }else{
+    alert('Please continue voting');
+  }
 }
 
 createProductObjects();
