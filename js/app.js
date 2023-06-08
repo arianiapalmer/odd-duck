@@ -9,6 +9,7 @@ let img1 = document.getElementById('img1');
 let img2 = document.getElementById('img2');
 let img3 = document.getElementById('img3');
 
+
 let products = ['bag','banana','boots','breakfast','bubblegum','chair','cthulhu','dog-duck','dragon','pen','pet-sweep','scissors','shark','tauntaun','unicorn','water-can','wine-glass','sweep'];
 
 // Constructor function to create a new product and push that product into the allProducts array
@@ -19,6 +20,7 @@ function Product(name, fileExt = 'jpg'){
   this.timesVoted = 0;
   allProducts.push(this);
 }
+
 // Loops through product array to create an object for each index
 function createProductObjects(){
   for(let i=0; i<products.length; i++){
@@ -28,6 +30,7 @@ function createProductObjects(){
     }
   }
 }
+
 // Helper function generates a random number to represent the array index with the length of all products as the maximum
 function getRandomIndex(){
   return Math.floor(Math.random()* allProducts.length);
@@ -74,45 +77,48 @@ function handleVote(event){
   }
   generateRandomImg();
 }
-// Event handler for when the user clicks, view results - renders a chart
+// Define Chart
+let productVotes = [];
+let productViews = [];
+const chartConfig = {
+  type: 'bar',
+  data:{
+    color:'white',
+    labels:products,
+    datasets: [{
+      label: '# of Votes',
+      data:productVotes,
+      backgroundColor: 'red',
+      borderWidth: 1,
+    },
+    {
+      label: ' # of views',
+      data:productViews,
+      backgroundColor:'blue',
+      borderWidth: 1
+    }
+    ]
+  },
+  options: {
+    plugins: {
+      customCanvasBackgroundColor:{
+        color: 'white'
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero:true
+      }
+    }
+  }
+};
+// Event handler for when the user clicks view results - renders a chart
 function handleResultButton(){
-  let productVotes = [];
-  let productViews = [];
+  let allProductsString = JSON.stringify(allProducts);
+  localStorage.setItem('productArray', allProductsString);
   for(let i=0; i<allProducts.length; i++){
     productVotes.push(allProducts[i].timesVoted);
     productViews.push(allProducts[i].timesShown);
-  }
-  const chartConfig = {
-    type: 'bar',
-    data:{
-      color:'white',
-      labels:products,
-      datasets: [{
-        label: '# of Votes',
-        data:productVotes,
-        backgroundColor: 'red',
-        borderWidth: 1,
-      },
-      {
-        label: ' # of views',
-        data:productViews,
-        backgroundColor:'blue',
-        borderWidth: 1
-      }
-      ]
-    },
-    options: {
-      plugins: {
-        customCanvasBackgroundColor:{
-          color: 'white'
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero:true
-        }
-      }
-    }
   }
   if(maxVote<1){
     resultsButton.hidden = true;
@@ -121,9 +127,19 @@ function handleResultButton(){
     alert('Please continue voting');
   }
 }
-
+// Implementing LocalStorage
+function useStorage(){
+  let previousProductArr = localStorage.getItem('productArray');
+  if(previousProductArr){
+    previousProductArr = JSON.parse(previousProductArr);
+    allProducts = previousProductArr;
+  }else{
+    createProductObjects();
+  }
+}
+// Executable Code 
 createProductObjects();
 generateRandomImg();
 imgContainer.addEventListener('click', handleVote);
 resultsButton.addEventListener('click', handleResultButton);
-
+useStorage();
