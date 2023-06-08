@@ -23,10 +23,16 @@ function Product(name, fileExt = 'jpg'){
 
 // Loops through product array to create an object for each index
 function createProductObjects(){
+  // for(let i=0; i<products.length; i++){
+  //   new Product(products[i]);
+  //   if(allProducts[i].name === 'sweep'){
+  //     allProducts[i].image = `img/${allProducts[i].name}.png`;
+  //   }
   for(let i=0; i<products.length; i++){
-    new Product(products[i]);
-    if(allProducts[i].name === 'sweep'){
-      allProducts[i].image = `img/${allProducts[i].name}.png`;
+    if(products[i].name === 'sweep'){
+      new Product(products[i], 'png');
+    }else{
+      new Product(products[i]);
     }
   }
 }
