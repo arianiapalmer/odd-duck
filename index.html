@@ -7,10 +7,13 @@
     <title>Odd-Duck</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
-    <script src="path/to/chartjs/dist/chart.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header></header>
+    <header>
+        <h1>Odd Duck Survey</h1>
+        <p>Please select the product you are most likely to</p>
+    </header>
     <main>
         <div id="imgContainer">
             <img id="img1" src="" alt="">
@@ -18,7 +21,9 @@
             <img id="img3" src="" alt="">
         </div>
         <div id="results">
+            <canvas id="myChart"></canvas>
             <button>View Results</button>
+            <a id="vote-link" href="index.html">Vote Again</a>
         </div>
 
     </main>
