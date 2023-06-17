@@ -4,6 +4,7 @@ let allProducts = [];
 let maxVote = 25;
 let imgContainer = document.getElementById('imgContainer');
 let resultsButton = document.querySelector('button');
+let voteLink = document.getElementById('vote-link');
 const ctx = document.getElementById('myChart');
 let img1 = document.getElementById('img1');
 let img2 = document.getElementById('img2');
@@ -62,6 +63,7 @@ function generateRandomImg(){
   randomImg1.timesShown+=1;
   randomImg2.timesShown+=1;
   randomImg3.timesShown+=1;
+  voteLink.hidden = true;
 }
 // Event handler for when a product is clicked
 function handleVote(event){
@@ -124,6 +126,7 @@ function handleResultButton(){
   if(maxVote<1){
     resultsButton.hidden = true;
     new Chart(ctx, chartConfig);
+    voteLink.hidden = false;
   }else{
     alert('Please continue voting');
   }
@@ -139,7 +142,6 @@ function useStorage(){
   }
 }
 // Executable Code 
-// createProductObjects();
 useStorage();
 generateRandomImg();
 imgContainer.addEventListener('click', handleVote);
