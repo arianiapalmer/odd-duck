@@ -23,13 +23,8 @@ function Product(name, fileExt = 'jpg'){
 
 // Loops through product array to create an object for each index
 function createProductObjects(){
-  // for(let i=0; i<products.length; i++){
-  //   new Product(products[i]);
-  //   if(allProducts[i].name === 'sweep'){
-  //     allProducts[i].image = `img/${allProducts[i].name}.png`;
-  //   }
   for(let i=0; i<products.length; i++){
-    if(products[i].name === 'sweep'){
+    if(products[i] === 'sweep'){
       new Product(products[i], 'png');
     }else{
       new Product(products[i]);
@@ -144,8 +139,8 @@ function useStorage(){
   }
 }
 // Executable Code 
-createProductObjects();
+// createProductObjects();
+useStorage();
 generateRandomImg();
 imgContainer.addEventListener('click', handleVote);
 resultsButton.addEventListener('click', handleResultButton);
-useStorage();
