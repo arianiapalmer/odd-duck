@@ -1,3 +1,33 @@
-img{
-    max-width: 200px;
+body{
+    background-color:  rgb(43, 222, 210);
+    max-width: 700px;
+    margin: auto;
 }
+h1{
+    font-size: 3em;
+    justify-content: center;
+}
+p{
+    font-size: 2em;
+}
+#imgContainer{
+    max-width: 700px;
+    display: flex;
+    justify-content: space-evenly;
+    background-color:rgb(223, 96, 185);
+    border: 3px dotted black;
+    padding: 5px;
+}
+img{
+    width: 200px;
+    height: 200px;
+    margin: 5px;
+    border: 1px solid black;
+}
+a{
+    text-decoration: none;
+    /* text-decoration-color: none; */
+}
+
+
+/* http://127.0.0.1:5500/index.html */
